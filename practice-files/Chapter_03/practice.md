@@ -105,6 +105,70 @@ cat prompts.log
 vi translate_and_generate.py
 ```
 
+```python
+import subprocess
+import sys
+import os
+from datetime import datetime
+
+TRANSLATE_PROMPT = (
+    "You are an expert AI image prompt translator. "
+    "Convert the following Korean description into a detailed English image generation prompt. "
+    "Include visual details such as lighting, style, mood, and composition. "
+    "Output only the English prompt without explanation. Korean: "
+)
+
+SAVE_DIR = os.path.expanduser("~/book-practice/Chapter03")
+PROMPT_LOG = os.path.join(SAVE_DIR, "prompts.log")
+
+def setup():
+    os.makedirs(SAVE_DIR, exist_ok=True)
+    os.chdir(SAVE_DIR)
+
+def translate(korean_text):
+    result = subprocess.run(
+        ["ollama", "run", "qwen3.5:4b", "--think=false", TRANSLATE_PROMPT + korean_text],
+        capture_output=True, text=True
+    )
+    return result.stdout.strip()
+
+def generate_image(english_prompt):
+    subprocess.run(
+        ["ollama", "run", "x/flux2-klein:4b", english_prompt]
+    )
+    # 이미지는 ~/book-practice/Chapter03에 자동 저장됨
+
+def save_prompt(korean_text, english_prompt):
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    with open(PROMPT_LOG, "a", encoding="utf-8") as f:
+        f.write(f"[{timestamp}]\n")
+        f.write(f"  한글: {korean_text}\n")
+        f.write(f"  영어: {english_prompt}\n\n")
+
+def main():
+    if len(sys.argv) < 2:
+        print("사용법: python translate_and_generate.py '한글 프롬프트'")
+        sys.exit(1)
+
+    setup()
+
+    korean_input = sys.argv[1]
+
+    print("▶ 번역 중...")
+    english_prompt = translate(korean_input)
+    print(f"▶ 영어 프롬프트: {english_prompt}")
+
+    save_prompt(korean_input, english_prompt)
+
+    print("▶ 이미지 생성 중...")
+    generate_image(english_prompt)
+
+    print("✅ 완료 — 이미지와 프롬프트 기록이 ~/book-practice/Chapter03에 저장됨")
+
+if __name__ == "__main__":
+    main()
+```
+
 ```bash
 python translate_and_generate.py "황금빛 석양이 지는 해변의 커플"
 ```
@@ -286,6 +350,14 @@ cd ~/book-practice/Chapter03
 vi prompts/batch_list.txt
 ```
 
+```
+A dramatic beach sunset with golden and pink sky, calm waves reflecting warm light, silhouettes of palm trees, cinematic composition, photorealistic
+A majestic mountain range at sunset, golden hour lighting, misty valleys, pine trees in the foreground, wide angle, photorealistic, highly detailed
+A city skyline at sunset, warm orange glow reflecting off glass buildings, silhouette of the city, dramatic clouds, cinematic
+A cozy wooden cabin in snowy mountains, warm light, winter night, photorealistic
+A golden wheat field at sunset, dramatic sky, wide angle, photorealistic
+```
+
 **3단계: 배치 생성 스크립트 만들기**
 
 ```bash
@@ -327,6 +399,14 @@ chmod +x batch_generate.sh
 
 ```bash
 vi prompts/subjects_photo.txt
+```
+
+```
+a white ceramic coffee mug, on a rustic wooden table
+a red rose in full bloom, on a white marble surface
+a vintage leather wallet, next to car keys on a dark wooden desk
+a fresh green apple, on a kitchen counter
+a small succulent plant, in a terracotta pot on a windowsill
 ```
 
 **`template_batch.sh` 스크립트 만들기**
@@ -379,10 +459,22 @@ chmod +x template_batch.sh
 vi prompts/seed_prompt.txt
 ```
 
+```
+A minimalist white ceramic coffee mug on a rustic wooden table, steam rising gently, soft morning light from the left, shallow depth of field, bokeh background, photorealistic, highly detailed, professional product photography
+```
+
 **`prompts/seeds.txt` 파일 만들기**
 
 ```bash
 vi prompts/seeds.txt
+```
+
+```
+42
+123
+456
+789
+1234
 ```
 
 **`seed_batch.sh` 스크립트 만들기**

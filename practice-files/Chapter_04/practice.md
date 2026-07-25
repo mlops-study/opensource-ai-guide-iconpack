@@ -38,6 +38,12 @@ mkdir -p prompts
 vi prompts/coffee_cup_styles.txt
 ```
 
+```
+minimalist coffee cup line icon, thin outlines only, no fill, monochrome black on white background, clean geometric shapes, suitable for digital planner, flat design
+cute watercolor coffee cup illustration, soft pastel colors, hand-painted texture, pink and beige tones, white background, whimsical cozy aesthetic, suitable for sticker sheet
+isometric 3D coffee cup icon, clean render, flat shading, soft teal and white colors, minimal shadows, modern professional look, transparent background ready, icon design
+```
+
 ```bash
 ~/book-practice/Chapter03/batch_generate.sh prompts/coffee_cup_styles.txt
 ```
@@ -56,7 +62,26 @@ open output_20270101/minimalist-coffee-cup-line-icon-thin-outlines-only-20270101
 
 ## 4.4 프롬프트 변형과 시리즈 만들기
 
+### 4.4.2 시리즈 이미지를 위한 일관된 스타일 유지 전략
+
+**스타일 고정 키워드 예시 (커피 아이콘팩)**
+
+```
+[스타일 고정 — 모든 변형에 사용]
+flat vector design, pastel pink and beige color palette,
+thin clean lines, white background, no shadows, no gradients,
+cute modern aesthetic, isolated icon
+```
+
 ### 4.4.3 카테고리별 프롬프트 묶음 한 번에 생성하기
+
+**🤖 Claude:**
+
+```
+minimalist coffee cup icon, flat vector design, pastel pink and beige color palette, thin clean lines, white background, no shadows, no gradients, cute modern aesthetic, isolated icon
+minimalist latte glass icon, flat vector design, pastel pink and beige color palette, thin clean lines, white background, no shadows, no gradients, cute modern aesthetic, isolated icon
+minimalist moka pot coffee maker icon, flat vector design, pastel pink and beige color palette, thin clean lines, white background, no shadows, no gradients, cute modern aesthetic, isolated icon
+```
 
 **프롬프트 파일에 저장하기**
 

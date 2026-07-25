@@ -131,6 +131,7 @@ images/coffee_icon_001.png로 저장해줘.
 
 ```bash
 cd ~/book-practice/Chapter05
+cp ../Chapter04/prompts/coffee_cup_styles.txt ./
 claude
 ```
 
@@ -241,17 +242,41 @@ description: 한글 아이디어로 이미지 생성 (번역 → flux2-klein →
      d=json.load(sys.stdin)
      open('<출력경로>.png','wb').write(base64.b64decode(d['image']))
      "
+     ```
+6. prompts/icons/ 폴더가 없으면 생성한다.
+7. prompts/icons/YYYYMMDD_HHMMSS.md 파일에 아래 내용을 저장한다.
+   - 프론트매터: date, model, image 경로
+   - 본문: 한글 아이디어 제목, 영어 프롬프트
+8. 완료 메시지와 함께 이미지 경로, 프롬프트 파일 경로를 굵게 출력한다.
+
+## 응답 스타일
+각 단계 진행 상황을 짧게 알려준다. 완료 후 두 경로를 굵게 표시한다.
 ```
 
-### 응답 스타일
+**🤖 Claude Code가 처리하는 과정:**
 
 ```
-> 📌 **참고: 스킬 내용을 어떻게 준비했나**
->
-> 위 요청의 내용을 처음부터 혼자 작성할 필요는 없다. Claude(claude.ai)와 대화로 함께 만들면 된다.
->
-> **대화 예시:**
->
+~/.claude/skills/generate-image/ 폴더를 생성합니다...
+SKILL.md 파일을 작성합니다...
+
+✓ 파일이 생성됐습니다.
+  위치: ~/.claude/skills/generate-image/SKILL.md
+```
+
+**스킬 등록 확인:**
+
+```
+> generate-image 스킬 파일이 올바르게 만들어졌는지 확인해줘.
+```
+
+**Claude Code를 재시작한다.**
+
+```
+> /exit
+```
+
+```bash
+claude
 ```
 
 ### 5.5.5 `/generate-image "한글 설명"` 한 줄로 이미지 생성 실습
@@ -352,6 +377,12 @@ description: 한글 아이디어로 이미지 생성 (번역 → flux2-klein →
 
 ```bash
 claude
+```
+
+### 5.6.2 배치 생성 옵션 추가 (`--count N`)
+
+```
+> /generate-image "파스텔 커피잔 아이콘" --count 5
 ```
 
 ### 5.6.3 자동 저장된 프롬프트로 스타일 일관성 유지하기
