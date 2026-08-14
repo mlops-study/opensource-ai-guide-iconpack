@@ -26,7 +26,8 @@
 │   ├── 부록 C. Claude.ai 채팅 사용하기.pdf
 │   ├── 부록 D. Claude Code 설치하기.pdf
 │   ├── 부록 E. Claude Code 기본 사용법.pdf
-│   └── 부록 F. Python 설치하기 (pyenv).pdf
+│   ├── 부록 F. Python 설치하기 (pyenv).pdf
+│   └── 부록 G. Ollama 이미지 생성 오류 해결하기.pdf
 ├── MyIconShop/               # 아이콘팩 실전 샘플 (minimal / pink 3d 2세트)
 │   ├── prompts/              # images/의 이미지를 생성한 프롬프트 모음
 │   ├── images/                # 프롬프트를 기반으로 flux2-klein으로 생성한 이미지 모음
@@ -151,6 +152,7 @@ python remove_background.py images/*.png --output-dir ./output
 | 부록 D | Claude Code 설치하기 |
 | 부록 E | Claude Code 기본 사용법 |
 | 부록 F | Python 설치하기 (pyenv) |
+| 부록 G | Ollama 이미지 생성 오류 해결하기 |
 
 ---
 
